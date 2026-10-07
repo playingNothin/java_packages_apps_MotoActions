@@ -61,6 +61,15 @@ public class CameraActivationSensor implements SensorEventListener, UpdatedState
     @Override
     public void onSensorChanged(SensorEvent event) {
         Log.d(TAG, "activate camera");
+        // Moto G20 (java) 2026-10-03: a twist during the setup wizard launches
+        // the camera over the configuration flow and soft-locks it (user
+        // report) - suppress every gesture until setup completes.
+        if (android.provider.Settings.Secure.getInt(
+                mMotoActionsSettings.getContext().getContentResolver(),
+                android.provider.Settings.Secure.USER_SETUP_COMPLETE, 1) != 1) {
+            Log.d(TAG, "setup wizard still running, ignoring camera gesture");
+            return;
+        }
         if (mIsEnabled) mMotoActionsSettings.cameraAction();
     }
 

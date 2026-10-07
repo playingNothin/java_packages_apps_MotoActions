@@ -34,6 +34,14 @@ public class SensorHelper {
 
     private static final int SENSOR_TYPE_MMI_CAMERA_ACTIVATION = 65540;
     private static final int SENSOR_TYPE_MMI_CHOP_CHOP = 65546;
+    // Moto G20 (java) 2026-10-03: the SPRD sensorhub's vendor types collide
+    // with Motorola's MMI numbers - 65540 is SPRD "Face up & down" (which is
+    // why the camera fired whenever the screen faced down) and 65546 is SPRD
+    // "Flip" (why the flashlight never triggered). The real SPRD gestures:
+    // Twist (65547, the doorknob double-twist = Moto camera gesture) and
+    // ChopChop (65586, the shake = Moto flashlight gesture).
+    private static final int SENSOR_TYPE_SPRD_TWIST = 65547;
+    private static final int SENSOR_TYPE_SPRD_CHOP_CHOP = 65586;
     private static final int SENSOR_TYPE_MMI_FLAT_UP = 65537;
     private static final int SENSOR_TYPE_MMI_FLAT_DOWN = 65538;
     private static final int SENSOR_TYPE_MMI_STOW = 65539;
@@ -66,11 +74,11 @@ public class SensorHelper {
     }
 
     public Sensor getCameraActivationSensor() {
-        return mSensorManager.getDefaultSensor(SENSOR_TYPE_MMI_CAMERA_ACTIVATION, true);
+        return mSensorManager.getDefaultSensor(SENSOR_TYPE_SPRD_TWIST, true);
     }
 
     public Sensor getChopChopSensor() {
-        return mSensorManager.getDefaultSensor(SENSOR_TYPE_MMI_CHOP_CHOP, true);
+        return mSensorManager.getDefaultSensor(SENSOR_TYPE_SPRD_CHOP_CHOP, true);
     }
 
     public Sensor getFlatUpSensor() {

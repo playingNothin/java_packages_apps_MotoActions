@@ -60,6 +60,10 @@ public class MotoActionsSettings {
         mUpdatedStateNotifier = updatedStateNotifier;
     }
 
+    public Context getContext() {
+        return mContext;
+    }
+
     public boolean isCameraGestureEnabled() {
         return mCameraGestureEnabled;
     }
